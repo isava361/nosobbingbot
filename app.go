@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-
+	admin := 85208468
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
@@ -32,11 +32,11 @@ func main() {
 			if m.From == nil {
 				continue
 			}
-			if m.Text == "/start" {
+			if m.Text == "/start" || m.Chat.ID == admin {
 				continue
 			} else {
 				text := m.Text
-				msg := tgbotapi.NewMessage(85208468, text)
+				msg := tgbotapi.NewMessage(admin, text)
 				bot.Send(msg)
 			}
 		}
