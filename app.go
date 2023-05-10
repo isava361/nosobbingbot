@@ -35,7 +35,7 @@ func main() {
 			if m.Text == "/start" {
 				continue
 			} else {
-				text := m.Text()
+				text := m.Text
 				msg := tgbotapi.NewMessage(193117018, text)
 				bot.Send(msg)
 			}
