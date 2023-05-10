@@ -36,7 +36,7 @@ func main() {
 				continue
 			} else {
 				text := m.Text()
-				msg := tgbotapi.NewMessage(msg.Chat.ID = "193117018", text)
+				msg := tgbotapi.NewMessage(193117018, text)
 				bot.Send(msg)
 			}
 		}
