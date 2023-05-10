@@ -32,7 +32,9 @@ func main() {
 			if m.From == nil {
 				continue
 			}
-			if m.Text == "/start" || m.Chat.ID == admin {
+			if m.Text == "/start" {
+				text := "привет!/n это бот канала «давай на ты», и всё, что ты сюда напишешь — анонимно отправится Ксюше 📖 /n она уже ждёт твои вопросы и истории!"
+			} else if m.Chat.ID == admin {
 				continue
 			} else {
 				text := m.Text
