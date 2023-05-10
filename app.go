@@ -34,6 +34,8 @@ func main() {
 			}
 			if m.Text == "/start" {
 				text := "привет!/n это бот канала «давай на ты», и всё, что ты сюда напишешь — анонимно отправится Ксюше 📖 /n она уже ждёт твои вопросы и истории!"
+				msg := tgbotapi.NewMessage(m.Chat.ID, text)
+				bot.Send(msg)
 			} else if m.Chat.ID == admin {
 				continue
 			} else {
