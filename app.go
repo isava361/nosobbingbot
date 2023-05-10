@@ -18,7 +18,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	int64 admin := 85208468
+	var admin int64  85208468
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
