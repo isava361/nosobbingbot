@@ -36,6 +36,7 @@ func main() {
 				text := "привет!\nэто бот канала «[давай на ты](https://t.me/+eFiRVo8U-NhlNjEy)», и всё, что ты сюда напишешь — анонимно отправится Ксюше 📖\n\nона уже ждёт твои вопросы и истории!"
 				msg := tgbotapi.NewMessage(m.Chat.ID, text)
 				msg.ParseMode = "Markdown"
+				msg.DisableWebPagePreview = true
 				bot.Send(msg)
 			} else if m.Chat.ID == admin {
 				continue
