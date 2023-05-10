@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -22,18 +21,4 @@ func readBotToken(filename string) (string, error) {
 	}
 
 	return "", fmt.Errorf("no token found in %s", filename)
-}
-
-func writeConfig(filename string, config Config) error {
-	data, err := json.MarshalIndent(config, "", "  ")
-	if err != nil {
-		return err
-	}
-
-	err = ioutil.WriteFile(filename, data, 0644)
-	if err != nil {
-		return err
-	}
-
-	return nil
 }
