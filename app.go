@@ -52,7 +52,7 @@ func main() {
 				msg.ParseMode = "Markdown"
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
-			} else if m.Chat.ID == admin && m.ReplyToMessage != nil{
+			} else if m.Chat.ID == admin && m.ReplyToMessage != nil {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
 				words := strings.Fields(messagetext)
@@ -102,12 +102,10 @@ func main() {
 					if m.ForwardFrom != nil {
 						text := encryptedID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
-						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					} else {
 						text := encryptedID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
-						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					}
 				}
