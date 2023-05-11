@@ -71,11 +71,9 @@ func main() {
 				if err != nil {
 					panic(err)
 				}
-				if m.Text != "" {
-					text := encryptedID + "\n" + m.Text
-					msg := tgbotapi.NewMessage(admin, text)
-					bot.Send(msg)
-				}
+				text := encryptedID + "\n" + m.Text
+				msg := tgbotapi.NewMessage(admin, text)
+				bot.Send(msg)
 			} else if m.Chat.ID == admin && m.ReplyToMessage != nil {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
