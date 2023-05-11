@@ -6,11 +6,6 @@ import (
 	"log"
 	"strconv"
 	"strings"
-	"fmt"
-	"crypto/rand"
-	"crypto/rsa"
-	"crypto/sha256"
-	"encoding/base64"
 )
 
 const tokenlink string = "./config/testtoken.txt"
