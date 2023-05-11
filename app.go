@@ -94,15 +94,13 @@ func main() {
 				}
 				if m.Text != "" {
 					if m.ForwardFrom != nil {
-						text := strconv.FormatInt(chatID, 10) "\n" + m.Text
+						text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
-						msg.ParseMode = "HTML"
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					} else {
-						text := strconv.FormatInt(chatID, 10) + " - " + "<a href='tg://user?id=" + strconv.FormatInt(m.Chat.ID, 10) + "'>" + m.From.UserName + "</a>" + " - " + fullName + "\n" + m.Text
+						text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
-						msg.ParseMode = "HTML"
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					}
