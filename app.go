@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
-	"rsa"
-	"rand"
-	"sha256"
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
 )
 
 const tokenlink string = "./config/testtoken.txt"
@@ -52,7 +52,7 @@ func main() {
 				msg.ParseMode = "Markdown"
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
-			} else if m.Chat.ID == admin && m.ReplyMessage != nil{
+			} else if m.Chat.ID == admin && m.ReplyToMessage != nil{
 				messagetext := originalmessage.Text
 				words := strings.Fields(messagetext)
 
