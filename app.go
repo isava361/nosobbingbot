@@ -55,6 +55,7 @@ func main() {
 				continue
 			} else if m.Chat.Type == "private" && m.Chat.ID != admin {
 				testmsg := tgbotapi.NewMessage(m.Chat.ID, "I've sent your message")
+				bot.Send(testmsg)
 				secretID := strconv.FormatInt(m.Chat.ID, 10)
 				plaintext := []byte(secretID)
 				chatID, err := rsa.EncryptOAEP(
