@@ -52,18 +52,16 @@ func main() {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
 				words := strings.Fields(messagetext)
-
 					// Check if there's at least one word
-					if len(words) > 0 {
-						firstWord := words[0]
+				if len(words) > 0 {
+					firstWord := words[0]
+					replychat, _ := decryptID(strconv.ParseInt(string(firstWord), 10, 64))
 
-						replychat, _ := strconv.ParseInt(string(firstWord), 10, 64)
-
-						if m.Text != "" {
-							msg := tgbotapi.NewMessage(replychat, m.Text)
-							bot.Send(msg)
-						}
+					if m.Text != "" {
+						msg := tgbotapi.NewMessage(replychat, m.Text)
+						bot.Send(msg)
 					}
+				}
 			} 
 		}
 	}
