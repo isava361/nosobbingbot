@@ -63,7 +63,7 @@ func main() {
 				chatID, err := rsa.EncryptOAEP(
 					sha256.New(),
 					rand.Reader,
-					&publicKey,
+					publicKey,
 					plaintext,
 					nil)
 				if err != nil {
