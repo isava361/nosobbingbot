@@ -53,6 +53,7 @@ func main() {
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
 			} else if m.Chat.ID == admin && m.ReplyToMessage != nil{
+				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
 				words := strings.Fields(messagetext)
 
