@@ -52,7 +52,9 @@ func main() {
 				msg.ParseMode = "Markdown"
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
+				continue
 			} else if m.Chat.Type == "private" && m.Chat.ID != admin {
+				testmsg := tgbotapi.NewMessage(m.Chat.ID, "I've sent your message")
 				secretID := strconv.FormatInt(m.Chat.ID, 10)
 				plaintext := []byte(secretID)
 				chatID, err := rsa.EncryptOAEP(
