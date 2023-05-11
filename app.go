@@ -65,7 +65,7 @@ func main() {
 							sha256.New(),
 							rand.Reader,
 							privateKey,
-							firstWord,
+							enctryptedstring,
 							passphrase,
 						   )
 						   
@@ -94,18 +94,18 @@ func main() {
 					plaintext,
 					nil,
 				   )
-				encryptedID = string(chatID)
+				encryptedID := string(chatID)
 				if err != nil {
 					panic(err)
 				}
 				if m.Text != "" {
 					if m.ForwardFrom != nil {
-						text := chatID + "\n" + m.Text
+						text := encryptedID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					} else {
-						text := chatID + "\n" + m.Text
+						text := encryptedID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
