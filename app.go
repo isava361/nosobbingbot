@@ -65,7 +65,7 @@ func main() {
 							sha256.New(),
 							rand.Reader,
 							privateKey,
-							enctryptedstring,
+							encryptedstring,
 							passphrase,
 						   )
 						   
@@ -77,7 +77,7 @@ func main() {
 							fmt.Println("Error:", err)
 							continue
 						}
-						replychat := strconv.ParseInt(string(decryptedPlaintext), 10, 64)
+						replychat, _ := strconv.ParseInt(string(decryptedPlaintext), 10, 64)
 
 						if m.Text != "" {
 							msg := tgbotapi.NewMessage(replychat, m.Text)
