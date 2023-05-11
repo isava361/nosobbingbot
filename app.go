@@ -4,10 +4,12 @@ package main
 import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"log"
-//	"strings"
+	"strconv"
+	"strings"
+	"fmt"
 )
 
-const tokenlink string = "./config/token.txt"
+const tokenlink string = "./config/testtoken.txt"
 
 func main() {
 	token, err := readBotToken(tokenlink)
@@ -18,7 +20,16 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	var admin int64 = 852084868
+	var admin int64 = 193117018
+
+	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
+	if err != nil {
+	 panic(err)
+	}
+
+	passphrase := []byte("myPassphrase")
+	
+	publicKey := &privateKey.PublicKey
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
@@ -38,12 +49,64 @@ func main() {
 				msg.ParseMode = "Markdown"
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
-			} else if m.Chat.ID == admin {
-				continue
+			} else if m.Chat.ID == admin && m.ReplyMessage != nil{
+				messagetext := originalmessage.Text
+				words := strings.Fields(messagetext)
+
+					// Check if there's at least one word
+					if len(words) > 0 {
+						firstWord := words[0]
+						decryptedPlaintext, err := rsa.DecryptOAEP(
+							sha256.New(),
+							rand.Reader,
+							privateKey,
+							firstWord,
+							passphrase,
+						   )
+						   
+						   if err != nil {
+							panic(err)
+						   }
+						if err != nil {
+							// Handle error
+							fmt.Println("Error:", err)
+							continue
+						}
+						replychat := string(decryptedPlaintext)
+						if m.Text != "" {
+							bot.Send(testmsg)
+							msg := tgbotapi.NewMessage(replychat, m.Text)
+							bot.Send(msg)
+						}
+					}
 			} else {
-				text := m.Text
-				msg := tgbotapi.NewMessage(admin, text)
-				bot.Send(msg)
+				passphrase := []byte("myPassphrase")
+				chatID, err := rsa.EncryptOAEP(
+					sha256.New(),
+					rand.Reader,
+					publicKey,
+					plaintext,
+					nil,
+				   )
+				   
+				if err != nil {
+					panic(err)
+				}
+				if m.Text != "" {
+					if m.ForwardFrom != nil {
+						text := strconv.FormatInt(chatID, 10) "\n" + m.Text
+						msg := tgbotapi.NewMessage(admin, text)
+						msg.ParseMode = "HTML"
+						msg.DisableWebPagePreview = true
+						bot.Send(msg)
+					} else {
+						text := strconv.FormatInt(chatID, 10) + " - " + "<a href='tg://user?id=" + strconv.FormatInt(m.Chat.ID, 10) + "'>" + m.From.UserName + "</a>" + " - " + fullName + "\n" + m.Text
+						msg := tgbotapi.NewMessage(admin, text)
+						msg.ParseMode = "HTML"
+						msg.DisableWebPagePreview = true
+						bot.Send(msg)
+					}
+				}
 			}
 		}
 	}
