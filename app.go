@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-const tokenlink string = "./config/testtoken.txt"
+const tokenlink string = "./config/token.txt"
 
 func main() {
 	token, err := readBotToken(tokenlink)
@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		log.Panic(err)
 	}
-	var admin int64 = 193117018
+	var admin int64 = 852084868
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
