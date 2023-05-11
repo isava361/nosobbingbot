@@ -26,14 +26,6 @@ func main() {
 	}
 	var admin int64 = 193117018
 
-	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
-	if err != nil {
-	 panic(err)
-	}
-
-	passphrase := []byte("myPassphrase")
-	
-	publicKey := &privateKey.PublicKey
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
 	u := tgbotapi.NewUpdate(0)
@@ -55,24 +47,10 @@ func main() {
 				bot.Send(msg)
 				continue
 			} else if m.Chat.Type == "private" && m.Chat.ID != admin {
-				testmsg := tgbotapi.NewMessage(m.Chat.ID, "I've sent your message")
-				bot.Send(testmsg)
-				adminmsg := tgbotapi.NewMessage(admin, "You are about to receive a message")
-				bot.Send(adminmsg)
-				secretID := strconv.FormatInt(m.Chat.ID, 10)
-				plaintext := []byte(secretID)
-				chatID, err := rsa.EncryptOAEP(
-					sha256.New(),
-					rand.Reader,
-					publicKey,
-					plaintext,
-					nil)
-				if err != nil {
-					panic(err)
-				}
-				encryptedID := base64.StdEncoding.EncodeToString(chatID)
+				
+				chatID := encryptID(m.Chat.ID)
 
-				text := encryptedID + "\n" + m.Text
+				text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
 				msg := tgbotapi.NewMessage(admin, text)
 				bot.Send(msg)
 			} else if m.Chat.ID == admin && m.ReplyToMessage != nil {
@@ -83,25 +61,8 @@ func main() {
 					// Check if there's at least one word
 					if len(words) > 0 {
 						firstWord := words[0]
-						encryptedstring, err := base64.StdEncoding.DecodeString(firstWord)
-						teststring := []byte(encryptedstring)
-						decryptedPlaintext, err := rsa.DecryptOAEP(
-							sha256.New(),
-							rand.Reader,
-							privateKey,
-							teststring,
-							passphrase,
-						   )
-						   
-						   if err != nil {
-							panic(err)
-						   }
-						if err != nil {
-							// Handle error
-							fmt.Println("Error:", err)
-							continue
-						}
-						replychat, _ := strconv.ParseInt(string(decryptedPlaintext), 10, 64)
+
+						replychat, _ := strconv.ParseInt(string(firstWord), 10, 64)
 
 						if m.Text != "" {
 							msg := tgbotapi.NewMessage(replychat, m.Text)
