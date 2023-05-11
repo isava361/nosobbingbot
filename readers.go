@@ -24,7 +24,7 @@ func readBotToken(filename string) (string, error) {
 
 func encryptID(id int64) int64 {
     // XOR each byte of the ID with a key
-    key := int64(42) // Choose a secret key
+    key := int64(12312312312312314) // Choose a secret key
     encrypted := id ^ key
 
     return encrypted
@@ -32,7 +32,7 @@ func encryptID(id int64) int64 {
 
 func decryptID(encrypted int64) int64 {
     // XOR each byte of the encrypted ID with the same key used for encryption
-    key := int64(42) // Secret key used during encryption
+    key := int64(12312312312312314) // Secret key used during encryption
     decrypted := encrypted ^ key
 
     return decrypted
