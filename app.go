@@ -63,14 +63,14 @@ func main() {
 				chatID, err := rsa.EncryptOAEP(
 					sha256.New(),
 					rand.Reader,
-					publicKey,
+					&publicKey,
 					plaintext,
-					nil,
-				   )
-				encryptedID := string(chatID)
+					nil)
 				if err != nil {
 					panic(err)
 				}
+				encryptedID := base64.StdEncoding.EncodeToString(chatID)
+
 				text := encryptedID + "\n" + m.Text
 				msg := tgbotapi.NewMessage(admin, text)
 				bot.Send(msg)
