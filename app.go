@@ -84,7 +84,7 @@ func main() {
 					if len(words) > 0 {
 						firstWord := words[0]
 						encryptedstring, err := base64.StdEncoding.DecodeString(firstWord)
-						teststring := []byte(firstWord)
+						teststring := []byte(encryptedstring)
 						decryptedPlaintext, err := rsa.DecryptOAEP(
 							sha256.New(),
 							rand.Reader,
