@@ -55,7 +55,8 @@ func main() {
 					// Check if there's at least one word
 				if len(words) > 0 {
 					firstWord := words[0]
-					replychat, _ := decryptID(strconv.ParseInt(string(firstWord), 10, 64))
+					encryptedmessage, _ := strconv.ParseInt(string(firstWord), 10, 64)
+					replychat := decryptID(encryptedmessage)
 
 					if m.Text != "" {
 						msg := tgbotapi.NewMessage(replychat, m.Text)
