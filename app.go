@@ -10,6 +10,7 @@ import (
 	"crypto/rand"
 	"crypto/rsa"
 	"crypto/sha256"
+	"encoding/base64"
 )
 
 const tokenlink string = "./config/testtoken.txt"
@@ -82,12 +83,13 @@ func main() {
 					// Check if there's at least one word
 					if len(words) > 0 {
 						firstWord := words[0]
-						encryptedstring := []byte(firstWord)
+						encryptedstring, err := base64.StdEncoding.DecodeString(firstWord)
+						teststring := []byte(firstWord)
 						decryptedPlaintext, err := rsa.DecryptOAEP(
 							sha256.New(),
 							rand.Reader,
 							privateKey,
-							encryptedstring,
+							teststring,
 							passphrase,
 						   )
 						   
