@@ -52,6 +52,31 @@ func main() {
 				msg.ParseMode = "Markdown"
 				msg.DisableWebPagePreview = true
 				bot.Send(msg)
+			} else if m.Chat.Type == "private" && m.Chat.ID != admin {
+				secretID := strconv.FormatInt(m.Chat.ID, 10)
+				plaintext := []byte(secretID)
+				chatID, err := rsa.EncryptOAEP(
+					sha256.New(),
+					rand.Reader,
+					publicKey,
+					plaintext,
+					nil,
+				   )
+				encryptedID := string(chatID)
+				if err != nil {
+					panic(err)
+				}
+				if m.Text != "" {
+					if m.ForwardFrom != nil {
+						text := encryptedID + "\n" + m.Text
+						msg := tgbotapi.NewMessage(admin, text)
+						bot.Send(msg)
+					} else {
+						text := encryptedID + "\n" + m.Text
+						msg := tgbotapi.NewMessage(admin, text)
+						bot.Send(msg)
+					}
+				}
 			} else if m.Chat.ID == admin && m.ReplyToMessage != nil {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
@@ -84,32 +109,7 @@ func main() {
 							bot.Send(msg)
 						}
 					}
-			} else {
-				secretID := strconv.FormatInt(m.Chat.ID, 10)
-				plaintext := []byte(secretID)
-				chatID, err := rsa.EncryptOAEP(
-					sha256.New(),
-					rand.Reader,
-					publicKey,
-					plaintext,
-					nil,
-				   )
-				encryptedID := string(chatID)
-				if err != nil {
-					panic(err)
-				}
-				if m.Text != "" {
-					if m.ForwardFrom != nil {
-						text := encryptedID + "\n" + m.Text
-						msg := tgbotapi.NewMessage(admin, text)
-						bot.Send(msg)
-					} else {
-						text := encryptedID + "\n" + m.Text
-						msg := tgbotapi.NewMessage(admin, text)
-						bot.Send(msg)
-					}
-				}
-			}
+			} 
 		}
 	}
 }
