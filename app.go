@@ -60,6 +60,7 @@ func main() {
 					// Check if there's at least one word
 					if len(words) > 0 {
 						firstWord := words[0]
+						encryptedstring := []byte(firstWord)
 						decryptedPlaintext, err := rsa.DecryptOAEP(
 							sha256.New(),
 							rand.Reader,
@@ -76,15 +77,16 @@ func main() {
 							fmt.Println("Error:", err)
 							continue
 						}
-						replychat := string(decryptedPlaintext)
+						replychat := strconv.ParseInt(string(decryptedPlaintext), 10, 64)
+
 						if m.Text != "" {
-							bot.Send(testmsg)
 							msg := tgbotapi.NewMessage(replychat, m.Text)
 							bot.Send(msg)
 						}
 					}
 			} else {
-				passphrase := []byte("myPassphrase")
+				secretID := strconv.FormatInt(m.Chat.ID, 10)
+				plaintext := []byte(secretID)
 				chatID, err := rsa.EncryptOAEP(
 					sha256.New(),
 					rand.Reader,
@@ -92,18 +94,18 @@ func main() {
 					plaintext,
 					nil,
 				   )
-				   
+				encryptedID = string(chatID)
 				if err != nil {
 					panic(err)
 				}
 				if m.Text != "" {
 					if m.ForwardFrom != nil {
-						text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
+						text := chatID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
 					} else {
-						text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
+						text := chatID + "\n" + m.Text
 						msg := tgbotapi.NewMessage(admin, text)
 						msg.DisableWebPagePreview = true
 						bot.Send(msg)
