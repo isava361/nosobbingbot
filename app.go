@@ -7,6 +7,9 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
+	"rsa"
+	"rand"
+	"sha256"
 )
 
 const tokenlink string = "./config/testtoken.txt"
