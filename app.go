@@ -43,9 +43,9 @@ func main() {
 				continue
 			} else if m.Chat.Type == "private" && m.Chat.ID != admin {
 				
-				chatID := encryptID(m.Chat.ID)
-				if m.Text != nil {
-					text := strconv.FormatInt(chatID, 10) + "\n" + m.Text
+				chatID := strconv.FormatInt(encryptID(m.Chat.ID),10)
+				if m.Text != "" {
+					text := chatID + "\n" + m.Text
 					msg := tgbotapi.NewMessage(admin, text)
 					bot.Send(msg)
 				}else if m.Photo != nil {
