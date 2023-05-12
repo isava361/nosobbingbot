@@ -92,7 +92,7 @@ func main() {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
 				if m.Caption != "" {
-					messagetext = originalmessage.Text
+					messagetext = originalmessage.Caption
 				}
 				words := strings.Fields(messagetext)
 				if len(words) > 0 {
