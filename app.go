@@ -49,38 +49,38 @@ func main() {
 					msg := tgbotapi.NewMessage(admin, text)
 					bot.Send(msg)
 				}else if m.Photo != nil {
-					text := chatID
+					text := chatID +":\n" + m.Caption
 					existingFileID := m.Photo[len(m.Photo)-1].FileID
 					photoMsg := tgbotapi.NewPhoto(admin, tgbotapi.FileID(existingFileID))
 					photoMsg.Caption = text
 					bot.Send(photoMsg)
 				} else if m.Audio != nil {
-					text := chatID
+					text := chatID +":\n" + m.Caption
 					existingFileID := m.Audio.FileID
 					audioMsg := tgbotapi.NewAudio(admin, tgbotapi.FileID(existingFileID))
 					audioMsg.Caption = text
 					bot.Send(audioMsg)
 				} else if m.Document != nil {
-					text := chatID
+					text := chatID +":\n" + m.Caption
 					existingFileID := m.Document.FileID
 					documentMsg := tgbotapi.NewDocument(admin, tgbotapi.FileID(existingFileID))
 					documentMsg.Caption = text
 					bot.Send(documentMsg)
 				} else if m.Video != nil {
-					text := chatID
+					text := chatID +":\n" + m.Caption
 					existingFileID := m.Video.FileID
 					videoMsg := tgbotapi.NewVideo(admin, tgbotapi.FileID(existingFileID))
 					videoMsg.Caption = text
 					bot.Send(videoMsg)
 				} else if m.Voice != nil {
-					text := chatID
+					text := chatID + ":"
 					msg := tgbotapi.NewMessage(admin, text)
 					existingFileID := m.Voice.FileID
 					voiceMsg := tgbotapi.NewVoice(admin, tgbotapi.FileID(existingFileID))
 					bot.Send(msg)
 					bot.Send(voiceMsg)
 				} else if m.VideoNote != nil {
-					text := chatID
+					text := chatID + ":"
 					msg := tgbotapi.NewMessage(admin, text)
 					existingFileID := m.VideoNote.FileID
 					length := m.VideoNote.Length
