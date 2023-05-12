@@ -91,7 +91,7 @@ func main() {
 			} else if m.Chat.ID == admin && m.ReplyToMessage != nil {
 				originalmessage := m.ReplyToMessage
 				messagetext := originalmessage.Text
-				if m.Caption != "" {
+				if originalmessage.Caption != "" {
 					messagetext = originalmessage.Caption
 				}
 				words := strings.Fields(messagetext)
