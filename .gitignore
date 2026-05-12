@@ -1,2 +1,6 @@
 /someBot
 /config/
+__pycache__/
+*.pyc
+.venv/
+venv/
