@@ -23,6 +23,10 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
+	if _, err := bot.Request(tgbotapi.DeleteWebhookConfig{DropPendingUpdates: false}); err != nil {
+		log.Printf("DeleteWebhook error: %v", err)
+	}
+
 	u := tgbotapi.NewUpdate(0)
 	u.Timeout = 60
 
